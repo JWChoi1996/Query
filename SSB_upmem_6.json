@@ -1,0 +1,67 @@
+{
+    "query_name": "",
+    "tables": [],
+    "query_tree": [
+        {
+            "operator": "HOST_FUNC_LOAD_COLUMN",
+            "table_name": "S_SYNTHETIC_1",
+            "col_name": "S_KEY"
+        },
+        {
+            "operator": "HOST_FUNC_LOAD_COLUMN",
+            "table_name": "R_SYNTHETIC_1",
+            "col_name": "R_KEY"
+        },
+        {
+            "operator": "CONTROL_FUNC_SYNC_THREADS"
+        },
+        {
+            "operator": "HOST_FUNC_SEND_DATA_OPT",
+            "table_name": "S_SYNTHETIC_1",
+            "col_name": "S_KEY"
+        },
+        {
+            "operator": "HOST_FUNC_SEND_DATA_OPT",
+            "table_name": "R_SYNTHETIC_1",
+            "col_name": "R_KEY"
+        }
+        ,
+        {
+            "operator": "CONTROL_FUNC_SYNC_THREADS"
+        }
+        ,
+        {
+            "operator": "COMPOUND_FUNC_GLB_PARTITION",
+            "inputs": ["unused", "R_KEY"], 
+            "outputs": ["Build_arr", "Build_hist"],
+            "packet_size": 32,
+            "partition_type": 1
+        }
+        ,
+        {
+            "operator": "COMPOUND_FUNC_GLB_PARTITION",
+            "inputs": ["unused", "S_KEY"], 
+            "outputs": ["Probe_arr", "Probe_hist"],
+            "packet_size": 32,
+            "partition_type": 1
+        }
+        ,
+        {
+            "operator": "COMPOUND_FUNC_RNC_JOIN",
+            "inputs": ["Build_arr", "Build_hist", "Probe_arr", "Probe_hist"], 
+            "outputs": ["join_result"],
+            "packet_size": 32,
+            "join_type": "JOIN_T_1_TO_1",
+            "comment": "first join"
+        }
+        ,
+        {
+            "operator": "HOST_FUNC_RECV_DATA_OPT",
+            "node_name": "join_result"
+        }
+        
+    ],
+    "query_string" : 
+    [    
+    ]
+}
