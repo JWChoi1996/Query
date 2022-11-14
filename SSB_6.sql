@@ -1,3 +1,3 @@
 select count(*)
-from R_32, S_32
-where S32_ORDERKEY = R32_ORDERKEY;
+from R_6, S_6
+where S_ORDERKEY = R_ORDERKEY;
